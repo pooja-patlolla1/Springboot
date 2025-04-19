@@ -1,38 +1,37 @@
 package com.example.studentapi.controller;
 
 import com.example.studentapi.model.Student;
-import com.example.studentapi.repository.StudentRepository;
+import com.example.studentapi.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/students")
+@CrossOrigin
 public class StudentController {
 
     @Autowired
-    private StudentRepository studentRepository;
+    private StudentService studentService;
 
     @GetMapping
     public List<Student> getAllStudents() {
-        return studentRepository.findAll();
+        return studentService.getAllStudents();
     }
 
     @PostMapping
     public Student createStudent(@RequestBody Student student) {
-        return studentRepository.save(student);
+        return studentService.saveStudent(student);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Student> getStudentById(@PathVariable Long id) {
-        Student student = studentRepository.findById(id).orElse(null);
-        return ResponseEntity.ok(student);
+    public Student getStudent(@PathVariable Long id) {
+        return studentService.getStudentById(id);
     }
 
     @DeleteMapping("/{id}")
-    public void deleteStudent(@PathVariable Lo
-                ory.deleteById(id);
+    public void deleteStudent(@PathVariable Long id) {
+        studentService.deleteStudent(id);
     }
 }
